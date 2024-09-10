@@ -1,0 +1,15 @@
+PASSO A PASSO DO CURSINHO:
+
+Criar uma pasta, 
+abrir a pasta no vscode
+rodar no terminal: pnpm init
+adicionar no package.json:  "author": "Allan Varago",
+  "license": "MIT",
+  "private":false
+  
+rodar: pnpm add express
+rodar: pnpm add -D typescript @types/express ts-node-dev
+rodar: pnpm ts-node-dev ./src/index.ts
+criar o arquivo .gitignore na pasta src
+
+
