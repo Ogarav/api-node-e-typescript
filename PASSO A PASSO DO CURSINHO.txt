@@ -12,4 +12,6 @@ rodar: pnpm add -D typescript @types/express ts-node-dev
 rodar: pnpm ts-node-dev ./src/index.ts
 criar o arquivo .gitignore na pasta src
 
+OBS.: apenas endipoint .get funciona quando testamos a api apenas no navegador
+
 
