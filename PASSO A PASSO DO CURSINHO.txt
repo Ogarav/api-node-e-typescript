@@ -12,6 +12,18 @@ rodar: pnpm add -D typescript @types/express ts-node-dev
 rodar: pnpm ts-node-dev ./src/index.ts
 criar o arquivo .gitignore na pasta src
 
+instalar lib jest: pnpm add jest ts-jest @types/jest
+                 :sudo apt install jest
+                 :pnpm install -g jest
+primeiro acesso jest: pnpm jest --init
+adicionando o jest: pnpm add --save-dev @types/jest
+no arquivo "jest.config.ts", descomentar a linha 176 (transform) e editar para:   transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest'    
+  },
+
+instalar a lib supertest: pnpm add -D supertest @types/supertest
+
+
 OBS.: apenas endipoint .get funciona quando testamos a api apenas no navegador
 
 
