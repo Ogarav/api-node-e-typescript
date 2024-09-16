@@ -18,7 +18,10 @@ router.post('/', (req, res) => {
 
 
 
-router.post('/cidades', CidadesController.create);
+router.post('/cidades', 
+    CidadesController.createValidation, 
+    CidadesController.create
+);
 
 
 

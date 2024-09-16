@@ -1,44 +1,37 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup';
+import { validation } from "../../shared/middleware";
 
 interface ICidade {
     nome:string;
     estado:string;
-}
+};
 
-const bodyValidation: yup.ObjectSchema<ICidade> = yup.object().shape({
-    nome: yup.string().required().min(3),
-    estado: yup.string().required().min(3),
-});
+
+
+    interface IFilter {
+        filter?: string;
+        //limit?: number;
+    };
+
+
+
+export const createValidation = validation((getSchema) => ({
+    body:getSchema<ICidade>(yup.object().shape({
+        nome: yup.string().required().min(3),
+        estado: yup.string().required().min(3),
+    })),
+    query:getSchema<IFilter>(yup.object().shape({
+        filter: yup.string().required().min(3),
+    })),     
+}));
+
+
 
 export const create = async (req: Request<{},{},ICidade> , res: Response) => {
-let validatedData: ICidade | undefined = undefined;
-    try{
-        validatedData = await bodyValidation.validate(req.body, {abortEarly: false});
-    } catch (err){
-        const yupError = err as yup.ValidationError;
-        const errors: Record<string, string> = {};
-
-        yupError.inner.forEach(error => {
-         
-            if (error.path === undefined) return;
-
-            errors[error.path] = error.message;
-        });
-
-        return res.status(StatusCodes.BAD_REQUEST).json({ errors });
-    }
-
-
-
-    // if (req.body.nome === undefined){
-    //     return res.status(StatusCodes.BAD_REQUEST).send('Informe o atributo nome');
-    // }
-
-    console.log(validatedData);
+    console.log(req.body);
 
 
     return res.send('Create!');
