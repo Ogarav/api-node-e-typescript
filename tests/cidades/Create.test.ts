@@ -14,7 +14,6 @@ describe('Cidades - Create', () => {
             .post ('/cidades')
             .send({ nome: 'Curitiba'});
 
-
         expect(res1.statusCode).toEqual(StatusCodes.CREATED); 
         expect(typeof res1.body).toEqual("number");  
     });
@@ -23,8 +22,7 @@ describe('Cidades - Create', () => {
 
         const res1 = await testServer
             .post ('/cidades')
-            .send({ nome: 'Curitiba'});
-
+            .send({ nome: 'C'});
 
         expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST); 
         expect(res1.body).toHaveProperty("errors.body.nome");  

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Request, Response } from "express";
 import * as yup from 'yup';
 import { validation } from "../../shared/middleware";
@@ -22,10 +23,15 @@ export const updateByIdValidation = validation((getSchema) => ({
 
 
 
-export const updateById = async (req: Request<IParamProps> , res: Response) => {
-    console.log(req.params);
-    console.log(req.body);
+export const updateById = async (req: Request<IParamProps ,{}, IBodyProps>, res: Response) => {
 
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Não implementado!');
+  
+    if (Number(req.params.id) === 99999) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors:{
+            default: 'Registro nao encontrado'
+        }
+    });
+
+    return res.status(StatusCodes.NO_CONTENT).send();
 
 };
