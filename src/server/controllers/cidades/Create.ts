@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 
 import { Request, Response } from "express";
-import * as yup from 'yup';
-import { validation } from "../../shared/middleware";
 import { StatusCodes } from "http-status-codes";
-import { ICidade } from "../../database/models";
+import * as yup from 'yup';
 import { CidadesProvider } from "../../database/providers/cidades";
+import { validation } from "../../shared/middleware";
+import { ICidade } from "../../database/models";
 
 interface IBodyProps extends Omit<ICidade, "id"> {}
 
@@ -17,12 +17,13 @@ export const createValidation = validation((getSchema) => ({
 
 export const create = async (req: Request<{},{},ICidade>, res: Response) => {
     const result = await CidadesProvider.create(req.body);
+
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             errors:{
                 default: result.message,
             }
-        })
+        });
     }
 
     return res.status(StatusCodes.CREATED).json(result);

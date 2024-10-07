@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { knex, type Knex } from 'knex';
+import { Knex } from 'knex';
 import { ETableNames } from '../ETableNames';
 
 
