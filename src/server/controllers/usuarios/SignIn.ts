@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { UsuariosProvider } from "../../database/providers/usuarios";
 import { validation } from "../../shared/middleware";
 import { IUsuario } from "../../database/models";
+import { PasswordCrypto } from "../../shared/services";
 
 interface IBodyProps extends Omit<IUsuario, "id" | "nome"> {}
 
@@ -31,8 +32,8 @@ export const signIn = async (req: Request<{},{},IBodyProps>, res: Response) => {
             }
         });
     }
-
-    if (senha !== result.senha) {
+    const passWordMatch = PasswordCrypto.verifyPassword(senha, result.senha);
+    if (!passWordMatch) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
             errors:{
                 default: 'E-mail ou senha inválidos',
