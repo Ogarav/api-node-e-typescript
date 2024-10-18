@@ -1,40 +1,23 @@
 import { StatusCodes } from "http-status-codes";
 import { testServer } from "../jest.setup";
 
-export function nameRandom(tamanho = 10) {
-    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    let resultado = '';
-    for (let i = 0; i < tamanho; i++) {
-      const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
-      resultado += caracteres.charAt(indiceAleatorio);
-    }
-    return resultado;
-  }
-  
-  
-  export function numRandom() {
-      
-      const numeroAleatorio = Math.floor(Math.random() * 9e19) + 1e19;
-      return numeroAleatorio.toString().padStart(20, '0');
-    }
-    
-    const nomeAleatorio = nameRandom();
-    const numeroAleatorio = numRandom();
-    const emailAleatorio = `${nomeAleatorio.toLowerCase()}@gmail.com`;
-
-    console.log(numeroAleatorio);
-    console.log(nomeAleatorio);
-    console.log(emailAleatorio);
-
-
 describe('Pessoas - GetById', () => {
+    let accessToken = '';
+    beforeAll(async()=>{
+        const email = 'getbyid-pessoas@gmail.com';
+        await testServer.post('/cadastrar').send({nome:'Teste', email, senha: '1234567890as'});
+        const signInRes = await  testServer.post('/entrar').send({email,senha: '1234567890as'});
+
+        accessToken = signInRes.body.accessToken;
+    });
 
 
     it('Busca Registro', async () => {
 
         const res1 = await testServer
             .post ('/cidades')
-            .send({ nome: nomeAleatorio});
+            .set ({Authorization: `Bearer ${accessToken}`})
+            .send({ nome: 'Teste'});
 
 
 
@@ -42,15 +25,17 @@ describe('Pessoas - GetById', () => {
 
         const res2 = await testServer
         .post ('/pessoas')
+        .set ({Authorization: `Bearer ${accessToken}`})
         .send({
-            email: emailAleatorio,
+            email: 'getbyid-pessoas@gmail.com',
             cidadeId: res1.body,
-            nomeCompleto: nomeAleatorio});
+            nomeCompleto: 'Teste'});
 
         expect(res2.statusCode).toEqual(StatusCodes.CREATED); 
 
         const resBuscada = await testServer
             .get(`/pessoas/${res2.body}`)
+            .set ({Authorization: `Bearer ${accessToken}`})
             .send();
 
         expect(resBuscada.statusCode).toEqual(StatusCodes.OK);  
@@ -61,13 +46,25 @@ describe('Pessoas - GetById', () => {
  
 
         const res1 = await testServer
-            .get (`/pessoas/${numeroAleatorio}`)
+            .get ('/pessoas/9999')
+            .set ({Authorization: `Bearer ${accessToken}`})
             .send();
 
 
         expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR); 
         expect(res1.body).toHaveProperty("errors.default");  
     });
+
+    it('Tenta buscar registro sem estar autenticado', async () => {
+
+        const resBuscada = await testServer
+            .get('/pessoas/1')
+            .send();
+
+            expect(resBuscada.statusCode).toEqual(StatusCodes.UNAUTHORIZED); 
+            expect(resBuscada.body).toHaveProperty('errors.default'); 
+    });
+
 
 });
 

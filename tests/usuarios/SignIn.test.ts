@@ -24,16 +24,6 @@ describe('Usuários - SignIn', () => {
         expect(res1.body).toHaveProperty('accessToken');
     });
 
-    it('Senha Incorreta', async()=>{
-        const res1 = await testServer
-        .post('/entrar')
-        .send({
-            senha: '1234567890ast',
-            email: 'bala@gmail.com',
-        });
-        expect(res1.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
-        expect(res1.body).toHaveProperty('errors.default');
-    });
 
     it('Email Incorreto', async()=>{
         const res1 = await testServer
@@ -90,4 +80,17 @@ describe('Usuários - SignIn', () => {
         expect(res1.body).toHaveProperty('errors.body.email');
     });
 
+    it('Senha Incorreta', async()=>{
+        const resErrado = await testServer
+        .post('/entrar')
+        .send({
+            senha: 'oituriadesotjns',
+            email: 'bala@gmail.com',
+        });
+        expect(resErrado.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
+        expect(resErrado.body).toHaveProperty('errors.default');
+    });
+
+
 })
+
