@@ -32,7 +32,7 @@ export const signIn = async (req: Request<{},{},IBodyProps>, res: Response) => {
             }
         });
     }
-    const passWordMatch = PasswordCrypto.verifyPassword(senha, usuario.senha);
+    const passWordMatch = await PasswordCrypto.verifyPassword(senha, usuario.senha);
     if (!passWordMatch) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
             errors:{
