@@ -1,29 +1,52 @@
 PASSO A PASSO DO CURSINHO:
 
-Criar uma pasta, 
-abrir a pasta no vscode
-rodar no terminal: pnpm init
-adicionar no package.json:  "author": "Allan Varago",
-  "license": "MIT",
-  "private":false
-  
-rodar: pnpm add express
-rodar: pnpm add -D typescript @types/express ts-node-dev
-rodar: pnpm ts-node-dev ./src/index.ts
-criar o arquivo .gitignore na pasta src
+1 Criar a pasta do projeto
+Crie uma pasta para o projeto e abra-a no VSCode.
 
-instalar lib jest: pnpm add jest ts-jest @types/jest
-                 :sudo apt install jest
-                 :pnpm install -g jest
-primeiro acesso jest: pnpm jest --init
-adicionando o jest: pnpm add --save-dev @types/jest
-no arquivo "jest.config.ts", descomentar a linha 176 (transform) e editar para:   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'    
-  },
+2 Inicializar o projeto
+No terminal, execute o comando pnpm init para iniciar o projeto Node. Depois, no arquivo package.json, adicione "author": "Allan Varago", "license": "MIT" e "private": false.
 
-instalar a lib supertest: pnpm add -D supertest @types/supertest
+3 Instalar o Express
+Instale o Express com o comando pnpm add express.
 
+4 Instalar dependências de desenvolvimento
+Instale TypeScript, @types/express e ts-node-dev usando o comando pnpm add -D typescript @types/express ts-node-dev.
 
-OBS.: apenas endipoint .get funciona quando testamos a api apenas no navegador
+5 Rodar o projeto
+Crie o arquivo src/index.ts para o servidor e rode o comando pnpm ts-node-dev ./src/index.ts para iniciar o servidor.
+
+6 Criar o arquivo .gitignore
+Crie um arquivo .gitignore e adicione nele o diretório node_modules e outros arquivos gerados, como dist.
+
+7 Instalar Jest para testes
+Instale o Jest com suas dependências através do comando pnpm add jest ts-jest @types/jest. Se necessário, no Linux, instale também com sudo apt install jest. Opcionalmente, você pode instalar o Jest globalmente com pnpm install -g jest.
+
+8 Configurar o Jest
+Inicialize o Jest com o comando pnpm jest --init. Depois, adicione os tipos do Jest com pnpm add --save-dev @types/jest.
+
+9 Editar a configuração do Jest
+No arquivo jest.config.ts, descomente a linha relacionada ao transform e edite-a para:
+transform: { '^.+\\.(ts|tsx)$': 'ts-jest' }.
+
+10 Configurar ESLint para padronização de código
+Instale o ESLint com suporte a TypeScript e inicialize-o no projeto para garantir qualidade no código. O ESLint ajudará a manter o código limpo e padronizado.
+
+11 Adicionar suporte ao Prettier para formatação automática
+Instale e configure o Prettier para formatação de código. Crie um arquivo .prettierrc para definir as regras de formatação, como uso de aspas simples e ponto e vírgula.
+
+12 Configurar variáveis de ambiente
+Crie um arquivo .env para armazenar variáveis de ambiente como a porta do servidor e a URL do banco de dados. Por exemplo, PORT=3000 e DB_URL=postgres://user:password@localhost:5432/database.
+
+13 Conectar ao banco de dados (opcional)
+Se for necessário o uso de um banco de dados, instale a biblioteca correspondente (por exemplo, pg para PostgreSQL) e configure a conexão no código. Um arquivo src/db.ts pode ser criado para gerenciar a conexão com o banco.
+
+14 Configurar PM2 para gerenciamento de processos
+Instale o PM2 para gerenciar processos em produção. Ele é útil para monitorar a execução do servidor em diferentes ambientes e garantir alta disponibilidade.
+
+15 Rodar testes com cobertura de código
+Execute o Jest com a opção de cobertura de testes para garantir que o máximo possível do código seja testado. Isso pode ser feito com o comando pnpm jest --coverage.
+
+16 Configurar CI/CD (opcional)
+Configure integração contínua (CI) e entrega contínua (CD) usando ferramentas como GitHub Actions ou Jenkins. Isso ajuda a automatizar testes e deploys a cada nova alteração no código.
 
 
