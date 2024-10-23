@@ -1,4 +1,3 @@
-API REST com Node.js e TypeScript
 Este projeto é uma API REST desenvolvida com Node.js e TypeScript, utilizando boas práticas de código, estrutura modular e suporte a testes com o framework Jest.
 
 Tecnologias Utilizadas
